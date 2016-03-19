@@ -1,2 +1,4 @@
 # xMemory
-Primer proyecto programado de Algoritmos y estructuras de datos II. ITCR 2016.
+Primer proyecto programado de Algoritmos y Estructuras de Datos II. ITCR 2016.
+
+
