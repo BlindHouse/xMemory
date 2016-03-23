@@ -1,9 +1,23 @@
 #include <iostream>
+#include <cereal/archives/json.hpp>
+#include <cereal/types/vector.hpp>
 
-using namespace std;
+#include "xObject.h"
 
 int main() {
-    //probando probando 1 2 3....
-    cout << "Hello, World!" << endl;
-    return 0;
+    std::stringstream ss;
+    {
+        cereal::JSONOutputArchive oarchive(std::cout); // Create an output archive
+
+        xObject Person = xObject("B", "H", 21, "nigga");
+        oarchive(Person); // Write the data to the archive
+        cout << ss << endl;
+    }
+
+    /*{
+        cereal::JSONInputArchive iarchive(ss); // Create an input archive
+
+        xObject Person = xObject("B", "H", 21, "nigga");
+        iarchive(Person); // Read the data from the archive
+    }*/
 }
