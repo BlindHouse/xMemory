@@ -10,6 +10,8 @@ public:
     xMemoryManager();
     ~xMemoryManager();
 
+    void* AviableMem;
+
     void* xCalloc(int Msize);
     void* xMalloc(int Msize);
 

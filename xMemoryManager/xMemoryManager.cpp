@@ -7,9 +7,14 @@
 
 
 xMemoryManager::xMemoryManager(){
-    void* AviableMem = calloc(8,0);
+    this->AviableMem = calloc(8,0);
 };
 
-void* xCalloc(int MSize){ };
+void* xMemoryManager::xMalloc(int MSize){
+    void* newptr;
+    newptr = AviableMem;
+    AviableMem = AviableMem + MSize;
+    return newptr;
+};
 
 xMemoryManager::~xMemoryManager(){ };
