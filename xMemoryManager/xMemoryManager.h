@@ -5,9 +5,16 @@
 #ifndef XMEMORY_XMEMORYMANAGER_H
 #define XMEMORY_XMEMORYMANAGER_H
 
-
 class xMemoryManager {
+public:
+    xMemoryManager();
+    ~xMemoryManager();
 
+    void* xCalloc(int Msize);
+    void* xMalloc(int Msize);
+
+
+    
 };
 
 
