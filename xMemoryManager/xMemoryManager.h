@@ -1,9 +1,9 @@
 //
 // Created by disoji on 21/03/16.
 //
-
-#ifndef XMEMORY_XMEMORYMANAGER_H
-#define XMEMORY_XMEMORYMANAGER_H
+#pragma once
+#ifndef XMEMORYMANAGER_H
+#define XMEMORYMANAGER_H
 
 
 #include <cstddef>
@@ -30,4 +30,4 @@ public:
 };
 
 
-#endif //XMEMORY_XMEMORYMANAGER_H
+#endif /* XMEMORY_XMEMORYMANAGER_H */
