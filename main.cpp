@@ -6,6 +6,8 @@
 #include "xMemoryManager/xMemoryManager.h"
 
 
+#define quote(x) #x
+
 int main() {
     std::stringstream ss;
     {
@@ -14,7 +16,18 @@ int main() {
         xObject Person = xObject("B", "H", 21, "nigga");
         oarchive(Person); // Write the data to the archive
         cout << ss << endl;
+        std::cout<<typeid(Person).name()<<"\n";
+        //std::cout<<"Nombre de la clase de Person, debería ser xObject:---"<<Person.getClassName()<<"\n";
     }
+    xMemoryManager MM;
+
+    float a;
+    string b = typeid(MM).name();
+    std::cout<<b[1]<<"\n";
+    std::cout<<typeid(MM).name()<<"\n";
+    std::cout<<typeid(a).name()<<"\n";
+    std::cout<<"Nombre de la clase de MM, debería ser xMemoryManager:---"<<MM.getClassName()<<"\n";
+    /*
     xMemoryManager MM = xMemoryManager();
     std::cout<<sizeof(MM.AviableMem)<<"fuck"<<"\n";
     std::cout<<MM.AviableMem<<"----"<<MM.AviableMem+1<<"\n";
@@ -38,7 +51,7 @@ int main() {
     e = MM.xMalloc(2);
     std::cout<<"valor de e:- "<<e<<"\n";
     std::cout<<"Valor de AM:- "<<MM.AviableMem<<"\n";
-
+     */
 
     /*{
         cereal::JSONInputArchive iarchive(ss); // Create an input archive

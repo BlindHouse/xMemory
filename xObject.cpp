@@ -15,4 +15,14 @@ xObject::xObject(string Name, string Lastname,
     setLastname(Lastname);
     setName(Name);
 
+
+}
+char* xObject::getClassName(){
+    if (classname.size() > 11){
+        classname = classname.substr (2, classname.size() - 1);
+        return (char*) classname.c_str();
+    }else{
+        classname = classname.substr(1, classname.size() - 1);
+        return (char*) classname.c_str();
+    }
 }

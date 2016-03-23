@@ -10,7 +10,7 @@
 
 using namespace std;
 
-struct xObject {
+class xObject {
 
     string name;
     string lastname;
@@ -18,10 +18,16 @@ struct xObject {
     string color;
 
     public:
-        xObject(string Name, string Lastname, int Age,
+    string classname;
+    xObject() { }
+
+    xObject(string Name, string Lastname, int Age,
                 string Color);
 
     public:
+
+    char* getClassName();
+
         const string &getName() const {
             return name;
         }
@@ -58,6 +64,7 @@ struct xObject {
         void serialize(Archive & archive) {
             archive( name, lastname, age, color ); // serialize things by passing them to the archive
         }
+
 
 };
 

@@ -5,9 +5,11 @@
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/xObject.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Tools.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/xMemoryManager/xMemoryManager.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/xMemoryManager/xMemoryManager.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/xObject.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Tools.cpp" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">

@@ -8,6 +8,8 @@
 
 xMemoryManager::xMemoryManager(){
     this->AviableMem = calloc(8,0);
+    classname = typeid(*this).name();
+    std::cout << "Temp dentro del contructor:--" << classname << "\n";
 };
 
 void* xMemoryManager::xMalloc(int MSize){
