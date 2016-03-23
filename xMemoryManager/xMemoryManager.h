@@ -5,18 +5,28 @@
 #ifndef XMEMORY_XMEMORYMANAGER_H
 #define XMEMORY_XMEMORYMANAGER_H
 
-class xMemoryManager {
+
+#include <cstddef>
+
+class xMemoryManager  {
+
+    int UsedLocalMem = 0;
+
 public:
-    xMemoryManager();
-    ~xMemoryManager();
+    int getUsedLocalMem() const {
+        return UsedLocalMem;
+    }
 
-    void* AviableMem;
+    void setUsedLocalMem(int UsedLocalMem) {
+        xMemoryManager::UsedLocalMem = UsedLocalMem;
+    }
 
-    void* xCalloc(int Msize);
-    void* xMalloc(int Msize);
+public:
+    void * RequestMem(size_t n);
 
+public:
+    void FreeMem(void* ptr);
 
-    
 };
 
 
