@@ -1,23 +1,20 @@
 #include <iostream>
-#include <cereal/archives/json.hpp>
-#include <cereal/types/vector.hpp>
-
+#include <fstream>
+#include <json/json.h>
 #include "xObject.h"
 
-int main() {
-    std::stringstream ss;
-    {
-        cereal::JSONOutputArchive oarchive(std::cout); // Create an output archive
+using namespace std;
 
-        xObject Person = xObject("B", "H", 21, "nigga");
-        oarchive(Person); // Write the data to the archive
-        cout << ss << endl;
-    }
+static void Seriaalize(){
+    xObject homer("Homer", "Simpson", 30, "Yellowish");
 
-    /*{
-        cereal::JSONInputArchive iarchive(ss); // Create an input archive
+    homer.serialize();
+    homer.deserialize();
 
-        xObject Person = xObject("B", "H", 21, "nigga");
-        iarchive(Person); // Read the data from the archive
-    }*/
+};
+
+int main(){
+
+    Seriaalize();
+    return 0;
 }

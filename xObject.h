@@ -6,7 +6,6 @@
 #define XMEMORY_XOBJECT_H
 
 #include <iostream>
-#include <cereal/archives/json.hpp>
 
 using namespace std;
 
@@ -18,46 +17,32 @@ struct xObject {
     string color;
 
     public:
+        string classname;
         xObject(string Name, string Lastname, int Age,
                 string Color);
 
     public:
-        const string &getName() const {
-            return name;
-        }
+        char* getClassName();
 
-        const string &getLastname() const {
-            return lastname;
-        }
+        string getName();
 
-        int getAge() const {
-            return age;
-        }
+        string getLastname();
 
-        const string &getColor() const {
-            return color;
-        }
+        int getAge();
 
-        void setName(const string &name) {
-                xObject::name = name;
-        }
+        string getColor();
 
-        void setLastname(const string &lastname) {
-            xObject::lastname = lastname;
-        }
+        void setName(const string &name);
 
-        void setAge(int age) {
-            xObject::age = age;
-        }
+        void setLastname(const string &lastname);
 
-        void setColor(const string &color) {
-            xObject::color = color;
-        }
+        void setAge(int age);
 
-        template<class Archive>
-        void serialize(Archive & archive) {
-            archive( name, lastname, age, color ); // serialize things by passing them to the archive
-        }
+        void setColor(const string &color);
+
+        void serialize();
+
+        void deserialize();
 
 };
 
