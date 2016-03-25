@@ -16,7 +16,10 @@ const int MAX_TOKENS_PER_LINE = 20;//Limite de tokens (palabras) por linea, reco
 const char* const DELIMITER = " ";//Delimitador
 
 /*
- * para luego realizar el define y probarlo con el preprocesador
+ * Recordar agregar el caso en que el comentario del language esté pegado a la definición
+ * Dejar entradas y demás listas
+ * preparar lo que falta en el enunciado
+ *
  * recordar que es necesario leer del CMake para saber que archivos leer
  * ver si es necesario solo los .cpp o también los .h (casi seguro que también los .h)*/
 
@@ -28,16 +31,16 @@ void xPro::parser()
     // create a file-reading object
     cout<<"antes de Crea new_file.txt"<<"\n";
     ifstream fin;
-    fstream fout("new_file.txt",ios::out);//Crea el nuevo archivo con ese nombre.
+    fstream fout("/home/disoji/ClionProjects/xMemory/new_file.txt",ios::out);//Crea el nuevo archivo con ese nombre.
     cout<<"Crea new_file.txt"<<"\n";
     fout.close();
-    //rename("MyNewfile.h", "xPro/MyNewfile.h"); //cambia el nombre del archivo, si se agrega como direccion a otro folder tambien lo cambia.
-    fout.open("new_file.txt");
-    fin.open("xObject.cpp"); // open a file
+    fout.open("/home/disoji/ClionProjects/xMemory/new_file.txt");
+    fin.open("/home/disoji/ClionProjects/xMemory/xPro/xPro.cpp"); // open a file
     cout<<"abre xObject.cpp y new_file.txt"<<"\n";
-    if (!fout.is_open())
-        cout<<"File Doesn't Exist"<<"\n"; // exit if file not found
 
+    if (!fin.good()) {
+        cout << "File Doesn't Exist" << "\n"; // exit if file not found
+    }
     // read each line of the file
     while (!fin.eof())
     {
@@ -61,23 +64,28 @@ void xPro::parser()
                 if (!token[n]) break; // no more tokens
             }
         }
+
         //Ciclo para la comparación, lectura y corte del comentario
         for (int j=0; j < n; j++){
-            if ((string)token[j] == "//Fuck_It"){
-                cout<<"Yep maaan: "<<token[j]<<"\n";
-                token[j] = "//turra";
+            string temp = "xPro";
+            if (((string)token[j]).compare(temp) == 0){
 
+                cout<<"Yep maaan: "<<token[j]<<"\n";
+                token[j] = "xPro/xPro.h";
+                /*
                 sprintf(format, "%%%ds", 6);//Genera el formato para el sscanf
                 sscanf(token[j], format, bufer);//Lee la cantidad dada por format de token[j] y lo mete en bufer
                 string a;
                 a = (string)token[j];//conversion a string del token[j]
                 a.erase(0,2);//Borra los elementos [0,2[
-                cout<<"Yep cambiado a:"<<token[j]<<"format es: "<<a<<"\n";
+                cout<<"Yep cambiado a:"<<token[j]<<"--format es: "<<a<<"\n";*/
 
             } else{
+                cout<<"WTF: "<<token[j]<<"\n";
                 //cout<<typeid(token[j]).name()<<"\n";
             }
         }
+
         //ciclo que escribe el nuevo archivo
         for (int i = 0; i < n; i++){// n = #of tokens
             fout<<token[i];
@@ -88,7 +96,10 @@ void xPro::parser()
         cout << endl;
         // process (print) the tokens
         for (int i = 0; i < n; i++) // n = #of tokens
-            //cout << "Token[" << i << "] = " << token[i] << endl;
+            cout << "Token[" << i << "] = " << token[i] << endl;
             cout << endl;
     }
+    rename("/home/disoji/ClionProjects/xMemory/new_file.txt", "/home/disoji/ClionProjects/xMemory/new_file.cpp"); //cambia el nombre del archivo, si se agrega como direccion a otro folder tambien lo cambia.
+
 }
+//Fuck
