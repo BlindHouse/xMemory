@@ -2,49 +2,75 @@
 // Created by disoji on 21/03/16.
 //
 #pragma once
-#ifndef XMEMORY_XMEMORYMANAGER_H
-#define XMEMORY_XMEMORYMANAGER_H
+#ifndef XMEMORY_MEMTABLE_H
+#define XMEMORY_MEMTABLE_H
+#include "../json.hpp"
+#include "xMemoryManager.h"
+#include <sstream>
 
-#include <cstddef>
-#include <iostream>
-#include <typeinfo>
-#include "../xObject.h"
+using json = nlohmann::json;
 
-class xMemoryManager: public xObject  {
-
-    int UsedLocalMem = 0;
-    void * AvailableMem;
-    void * CurrentMem;
+class MemTable{
 
 public:
-    xMemoryManager();
-    int getUsedLocalMem() const {
-        return UsedLocalMem;
+    static MemTable& getInstance(){
+        static MemTable instance;
+        return instance;
     }
 
-    void setUsedLocalMem(int UsedLocalMem) {
-        xMemoryManager::UsedLocalMem = UsedLocalMem;
+public:
+    MemTable(){};
+    MemTable(MemTable const& copy){};
+    void operator=(MemTable const& copy){};
+
+
+    static json Table;
+    xMemoryManager Manager;
+
+public:
+    static const json &getTable() {
+        return Table;
     }
 
-    void * RequestMem(size_t MSize);
+    template <class type>
+    type * allocateToTable(long ID, type obj){
 
-    char * getClassName(){
-        string classname = typeid(this).name();
-        if (classname.size()>11){
-            classname= classname.substr (3,classname.size()-1);
-            return (char*)classname.c_str();
-        }else{
-            classname = classname.substr(2,classname.size()-1);
-            return (char*)classname.c_str();
-        }
+        int MSize = sizeof(obj);
+        void * ptr = Manager.RequestMem(MSize);
+        type * finalptr= (type*)ptr;
 
+        intptr_t pointer = (intptr_t) ptr;
 
-    }
+        std::string number;
+        std::stringstream strstream;
+        strstream << ID;
+        strstream >> number;
 
-    void FreeMem(void* ptr);
+        Table[number] = {pointer, MSize};
+        std::cout << "ID: pointer address" << std::endl;
+        std::cout << Table << std::endl;
+        * finalptr = obj;
+
+        return finalptr;
+    };
+
+    template <class type>
+    void deleteFromTable(long ID, type* obj) {
+
+        type * ptr = (type*)getPosition(ID);
+        Manager.FreeMem(ptr);
+
+        std::string number;
+        std::stringstream strstream;
+        strstream << ID;
+        strstream >> number;
+
+        Table.erase(number);
+    };
+    void* getPosition(long ID);
+    void* getCurrent(long ID);
+    int getSize(long ID);
 
 };
 
-
-
-#endif //XMEMORY_XMEMORYMANAGER_H
+#endif //XMEMORY_MEMTABLE_H
