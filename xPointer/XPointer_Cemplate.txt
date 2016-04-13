@@ -1,0 +1,9 @@
+class xPointer {
+
+    int size;
+    void* ptr;
+    void* InitalPosition;
+    void* CurretPosition;
+
+
+};
