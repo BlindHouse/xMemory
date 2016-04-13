@@ -1,0 +1,25 @@
+
+void xObject::deserialize(string ClassName) {
+    //Creates a new Json Value to store variables
+    //and be able to pull data from it.
+    Json::Value root2;
+    //Tries to see if the file exists.
+    try {
+        //Creation of a stream of a file to write
+        //From reading.
+        ifstream file2;
+        //Opens the existent .json file
+        file2.open("File.json");
+        //Reads data to export it to the Json Value variable.
+        file2 >> root2;
+        file2.close();
+
+        string temp = root2[ClassName]["name"].toStyledString();
+        temp = cutString(temp);
+        (*this).name = temp;
+
+    }
+    catch (Json::RuntimeError) {
+        cout << "There's no file to deserialize" << endl;
+    }
+}

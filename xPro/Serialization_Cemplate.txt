@@ -1,0 +1,34 @@
+void //classname ::serialize(){
+    Json::Value root; //Creates a Json Value to be exported to a .json file.
+
+    try {
+        //Creation of a stream of a file to write
+        //From reading.
+        ifstream file2;
+        //Opens the existent .json file
+        file2.open("File.json");
+        //Reads data to export it to the Json Value variable.
+        file2 >> root;
+        file2.close();
+    }
+    catch (...){
+        cout << "Theres no existent file to append" << endl;
+    }
+
+    //Assignation of variables to the Json Value with their
+    //respective tags.
+
+    stringstream ss;
+    string temp;
+
+    ss << ID;
+    ss >> temp;
+
+    //xSerialize
+
+    //Creation and writing to the output file
+    ofstream file;
+    file.open("File.json"); //.json file that gets saved on
+    file << root;           //the executable directory.
+    file.close();
+}
