@@ -1,6 +1,8 @@
 #pragma once
+
 #ifndef XMEMORY_MEMTABLE_H
 #define XMEMORY_MEMTABLE_H
+
 #include "../json.hpp"
 #include "xMemoryManager.h"
 #include <sstream>
@@ -17,8 +19,8 @@ public:
 
 public:
     MemTable(){};
-    MemTable(MemTable const& copy){};
-    void operator=(MemTable const& copy){};
+    MemTable(MemTable const&){};
+    void operator=(MemTable const&){};
 
 
     static json Table;
@@ -32,9 +34,8 @@ public:
     template <class type>
     type * allocateToTable(long ID, type obj){
 
-        int MSize = sizeof(obj);
-        void * ptr = Manager.RequestMem(MSize);
-        type * finalptr= (type*)ptr;
+        size_t MSize = sizeof(obj);
+        type * ptr = Manager.addItem(obj);
 
         intptr_t pointer = (intptr_t) ptr;
 
@@ -44,17 +45,17 @@ public:
         strstream >> number;
 
         Table[number] = {pointer, MSize};
-        std::cout << "ID: pointer address" << std::endl;
-        std::cout << Table << std::endl;
-        * finalptr = obj;
+        std::cout << "ID: [pointer address, memory size]" << std::endl;
+        std::cout << Table <<"\n"<< std::endl;
 
-        return finalptr;
+        return ptr;
     };
 
     template <class type>
     void deleteFromTable(long ID, type* obj) {
 
-        type * ptr = (type*)getPosition(ID);
+        void * voidPointer= getPosition(ID);
+        type * ptr = (type*)voidPointer;
         Manager.FreeMem(ptr);
 
         std::string number;
@@ -63,9 +64,10 @@ public:
         strstream >> number;
 
         Table.erase(number);
+        std::cout << "ID: [pointer address, memory size]" << std::endl;
+        std::cout << Table <<"\n"<< std::endl;
     };
     void* getPosition(long ID);
-    void* getCurrent(long ID);
     int getSize(long ID);
 
 };

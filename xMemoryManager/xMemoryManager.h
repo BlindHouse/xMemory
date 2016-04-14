@@ -2,75 +2,76 @@
 // Created by disoji on 21/03/16.
 //
 #pragma once
-#ifndef XMEMORY_MEMTABLE_H
-#define XMEMORY_MEMTABLE_H
-#include "../json.hpp"
-#include "xMemoryManager.h"
-#include <sstream>
+#ifndef XMEMORY_XMEMORYMANAGER_H
+#define XMEMORY_XMEMORYMANAGER_H
 
-using json = nlohmann::json;
+#include <cstddef>
+#include <iostream>
+#include <typeinfo>
+#include <cstring>
 
-class MemTable{
-
+class xMemoryManager{
 public:
-    static MemTable& getInstance(){
-        static MemTable instance;
+    static xMemoryManager& getInstance(){
+        static xMemoryManager instance;
         return instance;
     }
 
 public:
-    MemTable(){};
-    MemTable(MemTable const& copy){};
-    void operator=(MemTable const& copy){};
+    xMemoryManager();
+    xMemoryManager(xMemoryManager const&){};
+    void operator=(xMemoryManager const&){};
 
 
-    static json Table;
-    xMemoryManager Manager;
+    static int UsedLocalMem;
+    static void * AvailableMem;
+    static void * CurrentMem;
 
 public:
-    static const json &getTable() {
-        return Table;
+    int getUsedLocalMem() const {
+        return UsedLocalMem;
     }
 
+    void setUsedLocalMem(int UsedLocalMem) {
+        xMemoryManager::UsedLocalMem = UsedLocalMem;
+    }
+
+    void * RequestMem(size_t MSize);
+
     template <class type>
-    type * allocateToTable(long ID, type obj){
+    type * addItem(type obj) {
 
-        int MSize = sizeof(obj);
-        void * ptr = Manager.RequestMem(MSize);
-        type * finalptr= (type*)ptr;
+        size_t objectSize = sizeof(obj);
+        void * initialPointer = RequestMem(objectSize);
+        type * ptr = (type*)malloc(objectSize);
+        *ptr = obj;
+        memmove(initialPointer, ptr, objectSize);
+        type * allocatePointer = (type*)initialPointer;
+        return allocatePointer;
 
-        intptr_t pointer = (intptr_t) ptr;
-
-        std::string number;
-        std::stringstream strstream;
-        strstream << ID;
-        strstream >> number;
-
-        Table[number] = {pointer, MSize};
-        std::cout << "ID: pointer address" << std::endl;
-        std::cout << Table << std::endl;
-        * finalptr = obj;
-
-        return finalptr;
+        /*       size_t objectSize = sizeof(obj);
+               void * initialPointer = RequestMem(objectSize);
+               type * allocatePointer = (type*)initialPointer;
+               *allocatePointer = obj;
+               return allocatePointer;*/
     };
 
     template <class type>
-    void deleteFromTable(long ID, type* obj) {
+    void FreeMem(type * ptr){
 
-        type * ptr = (type*)getPosition(ID);
-        Manager.FreeMem(ptr);
+        size_t MSize = sizeof(*ptr);
 
-        std::string number;
-        std::stringstream strstream;
-        strstream << ID;
-        strstream >> number;
+        memset(ptr, 0, MSize);
 
-        Table.erase(number);
+        setUsedLocalMem(getUsedLocalMem() - MSize);
+        std::cout << "There are now " << getUsedLocalMem()<<" bytes of used memory" << std::endl;
+        std::cout << ptr<< ": "<<*ptr << std::endl;
+
+
     };
-    void* getPosition(long ID);
-    void* getCurrent(long ID);
-    int getSize(long ID);
 
 };
 
-#endif //XMEMORY_MEMTABLE_H
+
+
+#endif //XMEMORY_XMEMORYMANAGER_H
