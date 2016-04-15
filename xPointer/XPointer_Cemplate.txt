@@ -1,9 +1,50 @@
-class xPointer {
 
+class xcontainer {
+public:
+    vector< xOb *> a;
+    void add( xOb * obj)
+    {
+        a.push_back(obj);  // call vector's standard method.
+    }
+    //friend class SmartPointer;
+};
+
+class xPointer {
+public:
+
+ xPointer ( xcontainer & objc){
+        oc = objc;
+        index = 0;
+        int size = 0;
+        void* ptr = NULL;
+        void* InitalPosition = NULL;
+        void* CurretPosition = NULL;
+    }
+    xcontainer oc;
+    int index;
     int size;
     void* ptr;
     void* InitalPosition;
     void* CurretPosition;
 
+    xPointer & operator=(const xPointer & other) // copy assignment
+    {
+        if (this != &other) { // self-assignment check expected
+            this->CurretPosition = other.CurretPosition;
+            this->InitalPosition = other.InitalPosition;
+            this->ptr = other.ptr;
+            this->size = other.size;
+        }
+        return *this;
+    }
 
+    xOb * operator->()
+    {
+        if(!oc.a[index])
+        {
+            cout << "Zero value";
+            return ( xOb *)0;
+        }
+        return oc.a[index];
+    }
 };
