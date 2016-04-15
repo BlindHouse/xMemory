@@ -9,7 +9,7 @@ using json = nlohmann::json;
 
 class MemTable{
 
-    /*Function for a singlton*/
+    /*Function for a singleton*/
 public:
     static MemTable& getInstance(){
         static MemTable instance;

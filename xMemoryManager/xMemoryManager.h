@@ -14,7 +14,7 @@
 
 class xMemoryManager{
 
-    /*Function for a singlton*/
+    /*Function for a singleton*/
 public:
     static xMemoryManager& getInstance(){
         static xMemoryManager instance;
@@ -27,11 +27,28 @@ public:
     void operator=(xMemoryManager const&){};
 
 
-    static int UsedLocalMem;
-    static void * AvailableMem;
+    /*UsedLocalMem represents the memory in bytes taken up by items set in the memory manager*/
+    static size_t UsedLocalMem;
+
+    /*AvailableMemSize represents the total memory available to be used by items*/
+    static size_t AvailableMemSize;
+
+    /*StartingPointer is a void pointer with the position to the start of the memory manager's available space*/
+    static void * StartingPointer;
+
+    /*CurrentMem is a void pointer which represents the location at which a new item can be added*/
     static void * CurrentMem;
 
 public:
+
+    static size_t getAvailableMemSize() {
+        return AvailableMemSize;
+    }
+
+    static void setAvailableMemSize(size_t AvailableMemSize) {
+        xMemoryManager::AvailableMemSize = AvailableMemSize;
+    }
+
     static void *getCurrentMem() {
         return CurrentMem;
     }
@@ -39,10 +56,10 @@ public:
         xMemoryManager::CurrentMem = CurrentMem;
     }
 
-    int getUsedLocalMem() const {
+    size_t getUsedLocalMem() const {
         return UsedLocalMem;
     }
-    void setUsedLocalMem(int UsedLocalMem) {
+    void setUsedLocalMem(size_t UsedLocalMem) {
         xMemoryManager::UsedLocalMem = UsedLocalMem;
     }
 

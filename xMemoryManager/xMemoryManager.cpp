@@ -6,15 +6,18 @@
 
 using namespace std;
 
-int xMemoryManager::UsedLocalMem = 0;
-void * xMemoryManager::AvailableMem;
+size_t xMemoryManager::UsedLocalMem = 0;
+size_t xMemoryManager::AvailableMemSize = 0;
+void * xMemoryManager::StartingPointer;
 void * xMemoryManager::CurrentMem;
 
 xMemoryManager::xMemoryManager() {
-    AvailableMem = malloc(100);
-    CurrentMem = AvailableMem;
-    memset(AvailableMem, 0, 100);
-    std::cout << "Memory has been set at location "<<AvailableMem<<"\n"<< std::endl;
+    StartingPointer = malloc(100);
+    CurrentMem = StartingPointer;
+    memset(StartingPointer, 0, 100);
+    setAvailableMemSize(90);
+    int memorySize = (int)getAvailableMemSize();
+    std::cout << "Memory has been set at location "<<StartingPointer<< " for " << memorySize<< " bytes"<< "\n"<< std::endl;
 
 }
 
@@ -23,7 +26,8 @@ void * xMemoryManager::RequestMem(size_t MSize) {
     void *ptr = CurrentMem;
     CurrentMem = CurrentMem + (MSize);
     setUsedLocalMem(getUsedLocalMem() + MSize);
+    int intMemorySize = (int)getUsedLocalMem();
     std::cout << "Current memory pointer location: "<<CurrentMem << std::endl;
-    std::cout << "Total used memory is :" << getUsedLocalMem() << "\n" << std::endl;
+    std::cout << "Total used memory is :" << intMemorySize << "\n" << std::endl;
     return ptr;
 }
