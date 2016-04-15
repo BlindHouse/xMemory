@@ -20,8 +20,10 @@ public:
     void xSerializationCheck(const char* token[]);
     //void writeSerializationCemplate(string pathToCemplate);
     //string getAtribute(const char* token[]);
-    static void generatexPointer(string name);
+    static void generatexPointer(string name, string path);
     static string writeSerialize(xLinkedList* list);
+    static xLinkedList* getPMakeList(string path_to_PMakeLists);
+
     //static bool has_language(string Token);
     //static const char* replace(const char* token, unsigned long tempPos);
 };

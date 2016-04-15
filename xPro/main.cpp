@@ -9,7 +9,9 @@
 using namespace std;
 
 int main(){
+
     cout<<"Proyecto xPro"<<"\n";
+
     /*
     xLinkedList* list = new xLinkedList();
     list->addNode("gato");
@@ -19,12 +21,19 @@ int main(){
 
     cout<<xPro::writeSerialize(list);
     */
+    /*
+    xLinkedList* list = new xLinkedList();
+    list = xPro::getPMakeList("/home/disoji/ClionProjects/xMemory/xPro/PMakeLists.txt");
+    for (xLnode* n = list->firstnode; n != NULL; n = n->next){
+        xPro::parser(n->NodeString);
+    }*/
 
-    xPro::parser("/home/disoji/ClionProjects/xMemory/xMemoryManager/xMemoryManager.h"); //Llama al preprocesador.
+    xPro::parser("/home/disoji/ClionProjects/xMemory/Perro.h"); //Llama al preprocesador.
 
     //xPro::generatexPointer("Perro");
     //xPro::generatexPointer("Gato");
     //xPro::generatexPointer("Efren_Perra");
+
     /*
     xLinkedList* list = new xLinkedList();
     cout<<"Before calling and assign of xPro::makeFileList"<<"\n";

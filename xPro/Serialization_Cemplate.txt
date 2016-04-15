@@ -1,19 +1,6 @@
-void //classname ::serialize(){
-    Json::Value root; //Creates a Json Value to be exported to a .json file.
+string serialize(){
 
-    try {
-        //Creation of a stream of a file to write
-        //From reading.
-        ifstream file2;
-        //Opens the existent .json file
-        file2.open("File.json");
-        //Reads data to export it to the Json Value variable.
-        file2 >> root;
-        file2.close();
-    }
-    catch (...){
-        cout << "Theres no existent file to append" << endl;
-    }
+    Json::Value root; //Creates a Json Value to be exported to a .json file.
 
     //Assignation of variables to the Json Value with their
     //respective tags.
@@ -26,9 +13,35 @@ void //classname ::serialize(){
 
     //xSerialize
 
-    //Creation and writing to the output file
-    ofstream file;
-    file.open("File.json"); //.json file that gets saved on
-    file << root;           //the executable directory.
-    file.close();
+
+    string JSONSerializedString = root.toStyledString(); //TODO utilizar este string.
+    return JSONSerializedString;
 }
+
+
+void deserialize(string JSONToDeserialize) {
+    //Creates a new Json Value to store variables
+    //and be able to pull data from it.
+    Json::Value root2;
+
+
+
+        root2 = JSONToDeserialize;
+        //TODO HERE WILL BE THE RETURN CODE
+
+
+         string temp;
+
+         Json::Reader reader;
+         reader.parse( JSONToDeserialize, root2);
+         temp = JSONToDeserialize.substr(6,1);
+
+         //variable = root2[temp][ "variable" ];
+
+        //xDeserialize
+
+
+    }
+
+
+
