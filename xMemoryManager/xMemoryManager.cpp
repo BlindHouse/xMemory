@@ -1,7 +1,6 @@
 //
 // Created by disoji on 21/03/16.
 //
-
 #include "xMemoryManager.h"
 
 
@@ -28,9 +27,3 @@ void * xMemoryManager::RequestMem(size_t MSize) {
     std::cout << "Total used memory is :" << getUsedLocalMem() << "\n" << std::endl;
     return ptr;
 }
-
-
-
-
-
-

@@ -6,7 +6,7 @@ using namespace std;
 json MemTable::Table;
 
 int MemTable::getSize(long ID) {
-    int size;
+    int size = 0;
 
     std::string number;
     std::stringstream strstream;
@@ -43,4 +43,13 @@ void *MemTable::getPosition(long ID) {
 
     return ptr;
 }
+
+void *MemTable::burp(void * destination, void * source, size_t objectSize, std::string ID) {
+    memmove(destination, source, objectSize);
+    Table.erase(ID);
+    intptr_t newPointer = (intptr_t) destination;
+    Table[ID] = {newPointer, objectSize};
+    return nullptr;
+}
+
 
