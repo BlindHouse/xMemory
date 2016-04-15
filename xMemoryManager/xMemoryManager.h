@@ -11,6 +11,7 @@
 #include <sstream>
 #include <cstring>
 #include <string>
+#include <memory>
 
 class xMemoryManager{
 
@@ -72,30 +73,21 @@ public:
     type * addItem(type obj, size_t objectSize) {
 
         void * initialPointer = RequestMem(objectSize);
-        void * ptr = malloc(objectSize);
-        type *ptr2 = new(ptr) type;
-        *ptr2 = obj;
-        memmove(initialPointer, ptr, objectSize);
+        void * localPointer = malloc(objectSize);
+
+        type *setterPointer = new(localPointer) type;
+        *setterPointer = obj;
+
+        memmove(initialPointer, localPointer, objectSize);
         type * allocatePointer = reinterpret_cast<type*>(initialPointer);
+
         return allocatePointer;
 
     };
 
     /* Receives the pointer for a specific object and sets its memory to 0's */
-    template <class type>
-    void FreeMem(type * ptr){
 
-        size_t MSize = sizeof(*ptr);
-        int printMSize = (int)MSize;
-
-        memset(ptr, 0, MSize);
-
-        setUsedLocalMem(getUsedLocalMem() - MSize);
-        std::cout << "There are now " << getUsedLocalMem()<<" bytes of used memory" << std::endl;
-        std::cout << "Item at memory address "<< ptr << " of " << printMSize << " bytes of size was erased"<< "\n" << std::endl;
-
-
-    };
+    void FreeMem(void * ptr, size_t MSize);
 
 };
 

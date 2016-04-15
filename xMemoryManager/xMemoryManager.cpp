@@ -31,3 +31,15 @@ void * xMemoryManager::RequestMem(size_t MSize) {
     std::cout << "Total used memory is :" << intMemorySize << "\n" << std::endl;
     return ptr;
 }
+
+void xMemoryManager::FreeMem(void *ptr, size_t MSize) {
+
+    int printMSize = (int)MSize;
+
+    memset(ptr, 0, MSize);
+
+    setUsedLocalMem(getUsedLocalMem() - MSize);
+    std::cout << "There are now " << getUsedLocalMem()<<" bytes of used memory" << std::endl;
+    std::cout << "Item at memory address "<< ptr << " of " << printMSize << " bytes of size was erased"<< "\n" << std::endl;
+
+}
